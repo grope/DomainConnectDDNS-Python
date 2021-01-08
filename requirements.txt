@@ -1,9 +1,9 @@
 coverage==4.5.1
 coveralls==1.5.0
-domain-connect==0.0.7
+domain-connect==0.0.8
 pytest==3.7.4
 unittest2==1.1.0
-validators~=0.14.0
+validators~=0.18.2
 mock==2.0.0
 requests==2.21.0
 ipaddress==1.0.23; python_version < '3.3'
@@ -11,3 +11,6 @@ ipaddress==1.0.23; python_version < '3.3'
 argparse~=1.4.0
 dnspython~=1.16.0
 setuptools~=40.8.0
+
+bottle==0.12.19
+python-dotenv==0.15.0

@@ -20,6 +20,9 @@ def main():
                         help="Update the IP even if no change detected. Don't use on regular update!")
     parser.add_argument('--protocols', nargs="*", choices=["ipv4", "ipv6"], default=["ipv4"],
                         help="Kind of IP to update", dest="protocols")
+    parser.add_argument('--myip', type=str, default=None, help="use this IPv4 address for update")
+    parser.add_argument('--myipv6', type=str, default=None, help="use this IPv6 address for update")
+    parser.add_argument('--myipv6prefix', type=str, default=None, help="use this IPv6 address prefix for update")
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('--domain', type=str, help="domain to keep up to date")
     group.add_argument('--all', action='store_true', help="update all domains in config")
@@ -34,6 +37,9 @@ def main():
     ignore_previous_ip = args.ignore_previous_ip
     ignore_ipv4 = "ipv4" not in args.protocols
     ignore_ipv6 = "ipv6" not in args.protocols
+    myip = args.myip
+    myipv6 = args.myipv6
+    myipv6prefix = args.myipv6prefix
 
     # validate domain
     if domain and not validators.domain(domain) is True:
@@ -50,6 +56,18 @@ def main():
 
     if ignore_previous_ip and action != 'update':
         print("--ignore-previous-ip only valid with update action")
+        return
+
+    if myip and action != 'update':
+        print("--myip only valid with update action")
+        return
+
+    if myipv6 and action != 'update':
+        print("--myipv6 only valid with update action")
+        return
+
+    if myipv6prefix and action != 'update':
+        print("--myipv6prefix only valid with update action")
         return
 
     protocols = ['IPv4', 'IPv6']

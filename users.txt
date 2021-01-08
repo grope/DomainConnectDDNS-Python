@@ -1,0 +1,12 @@
+{
+ "jogi": {
+  "domainconfig": "settings.txt",
+  "password": "iPUZiCbxmFDPxSfoz7+L1H49anR8ljHKncINBdoyzik=",
+  "salt": "ncciM/SePr1wtKdhjegDOX55TiPcWoEgFzve4Z2oDjg="
+ },
+ "peter": {
+  "domainconfig": "settings.txt",
+  "password": "t7OZw8eApQoKwHcidsjrOknddgryXD9vJZHlR9i9EmE=",
+  "salt": "e2um7utIxjE7D5iuY+28jcJn8ipJzo9J7uJLaQp2/n8="
+ }
+}

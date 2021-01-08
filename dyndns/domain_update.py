@@ -44,7 +44,7 @@ my_resolver = dns.resolver.Resolver()
 my_resolver.nameservers = ['1.1.1.1', '8.8.8.8', '9.9.9.9', '156.154.70.1', '176.103.130.130']
 
 
-def main(domain, settings='settings.txt', ignore_previous_ip=False):
+def main(domain, settings='settings.txt', ignore_previous_ip=False, ipv4=None, ipv6=None, ipv6prefix=None):
     # get local settings for domain
     try:
         with open(settings, "r") as settings_file:
@@ -182,6 +182,18 @@ def main(domain, settings='settings.txt', ignore_previous_ip=False):
         return "All records up to date. No update required."
 
     # update DNS records
+    success = update_dns_records(domain, template, config, protocols, public_ip, group_ids)
+
+    # update settings
+    with open(settings, "w") as settings_file:
+        new_settings = json.dumps(config, sort_keys=True, indent=1)
+        settings_file.write(new_settings)
+
+    if success:
+        return "DNS records successfully updated."
+    return "Could not update DNS records."
+
+def update_dns_records(domain, template, config, protocols, public_ip, group_ids):
     success = True
     try:
         context = dc.get_domain_connect_template_async_context(
@@ -219,12 +231,4 @@ def main(domain, settings='settings.txt', ignore_previous_ip=False):
         success = False
         config[domain]['last_attempt'] = int(time.time())
         print(e)
-
-    # update settings
-    with open(settings, "w") as settings_file:
-        new_settings = json.dumps(config, sort_keys=True, indent=1)
-        settings_file.write(new_settings)
-
-    if success:
-        return "DNS records successfully updated."
-    return "Could not update DNS records."
+    return success
